@@ -17,7 +17,7 @@ class VotingPageState extends State<VotingPage> {
       snapshot.data!.docs.forEach((element) {
         sampleData.add(RadioModel(
           false,
-          "${element["id"]}",
+          "${element["vid"]}",
           "${element["name"]}",
           element.id,
           "${element["voters"]}",
@@ -111,7 +111,7 @@ class VotingPageState extends State<VotingPage> {
     CollectionReference users = FirebaseFirestore.instance.collection('voter');
     return users
         .doc(id)
-        .set({'voters': v, "name": name, "id": idd})
+        .set({'voters': v, "name": name, "vid": idd})
         .then((value) =>
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text("Successful vote"),

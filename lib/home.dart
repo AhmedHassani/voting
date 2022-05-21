@@ -56,6 +56,30 @@ class _HomePageState extends State<HomePage> {
             ),
             ElevatedButton(
               onPressed: () async {
+             /*   final LocalAuthentication auth = LocalAuthentication();
+
+                final bool canAuthenticateWithBiometrics =
+                    await auth.canCheckBiometrics;
+                final bool canAuthenticate = canAuthenticateWithBiometrics ||
+                    await auth.isDeviceSupported();
+                print(canAuthenticate);
+                final List<BiometricType> availableBiometrics =
+                    await auth.getAvailableBiometrics();
+
+                if (availableBiometrics.isNotEmpty) {
+                  print("device not low this");
+                }
+
+                if (availableBiometrics.contains(BiometricType.strong) ||
+                    availableBiometrics.contains(BiometricType.face)) {
+                  print("select one :");
+                }
+                final bool didAuthenticate = await auth.authenticate(
+                    localizedReason:
+                        'Please authenticate to show account balance',
+                    options: const AuthenticationOptions(biometricOnly: true));
+                if(didAuthenticate){
+                }*/
                 FirebaseFirestore.instance
                     .collection('users')
                     .get()
@@ -86,31 +110,7 @@ class _HomePageState extends State<HomePage> {
                     }
                   });
                 });
-                /*final LocalAuthentication auth = LocalAuthentication();
 
-                final bool canAuthenticateWithBiometrics =
-                    await auth.canCheckBiometrics;
-                final bool canAuthenticate = canAuthenticateWithBiometrics ||
-                    await auth.isDeviceSupported();
-                print(canAuthenticate);
-                final List<BiometricType> availableBiometrics =
-                    await auth.getAvailableBiometrics();
-
-                if (availableBiometrics.isNotEmpty) {
-                  print("device not low this");
-                }
-
-                if (availableBiometrics.contains(BiometricType.strong) ||
-                    availableBiometrics.contains(BiometricType.face)) {
-                  print("select one :");
-                }
-                final bool didAuthenticate = await auth.authenticate(
-                    localizedReason:
-                        'Please authenticate to show account balance',
-                    options: const AuthenticationOptions(biometricOnly: true));
-                if(didAuthenticate){
-                  print("auth");
-                }*/
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
