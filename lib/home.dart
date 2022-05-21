@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ElevatedButton(
               onPressed: () async {
-             /*   final LocalAuthentication auth = LocalAuthentication();
+              final LocalAuthentication auth = LocalAuthentication();
 
                 final bool canAuthenticateWithBiometrics =
                     await auth.canCheckBiometrics;
@@ -79,37 +79,9 @@ class _HomePageState extends State<HomePage> {
                         'Please authenticate to show account balance',
                     options: const AuthenticationOptions(biometricOnly: true));
                 if(didAuthenticate){
-                }*/
-                FirebaseFirestore.instance
-                    .collection('users')
-                    .get()
-                    .then((QuerySnapshot querySnapshot) {
-                  querySnapshot.docs.forEach((doc) {
-                    print(doc["vnumber"]);
-                    if(doc["age"]<18&&doc["vnumber"]==_controller.text){
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text("Your Age under 18"),
-                      ));
-                    }else if(doc["isvoting"]==true&&doc["vnumber"]==_controller.text){
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text("Your are already vote"),
-                      ));
-                    }else{
-                      if(doc["vnumber"]==_controller.text){
-                        is_vote(doc.id,doc["age"],true,doc["name"],doc["vnumber"]);
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (BuildContext context) => SelectPage()),
-                            ModalRoute.withName('/')
-                        );
-                      }else{
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text("Authentication not Valid"),
-                        ));
-                      }
-                    }
-                  });
-                });
+                  //login();
+                }
+                login();
 
               },
               child: Row(
@@ -131,6 +103,39 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  login(){
+    FirebaseFirestore.instance
+        .collection('users')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        print(doc["vnumber"]);
+        if(doc["age"]<18&&doc["vnumber"]==_controller.text){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Your Age under 18"),
+          ));
+        }else if(doc["isvoting"]==true&&doc["vnumber"]==_controller.text){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text("Your are already vote"),
+          ));
+        }else{
+          if(doc["vnumber"]==_controller.text){
+            is_vote(doc.id,doc["age"],true,doc["name"],doc["vnumber"]);
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (BuildContext context) => SelectPage()),
+                ModalRoute.withName('/')
+            );
+          }else{
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Authentication not Valid"),
+            ));
+          }
+        }
+      });
+    });
   }
 
   is_vote(String id,int age,bool isvoting,String name,String vnumber){
